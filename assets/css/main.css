@@ -1,0 +1,83 @@
+/* Main Task Form */
+.task-form {
+    padding: 2rem;
+    width: 50%; /* Adjust width */
+    margin: 5rem auto; /* Center form horizontally and vertically */
+    background-color: #fff; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  }
+  
+  .task-form h2 {
+    text-align: center; /* Center the header */
+    font-size: 1.8rem; /* Header size */
+    margin-bottom: 2rem; /* Spacing below the header */
+    color: #333; /* Dark text color */
+  }
+  
+  /* Input, Textarea, Select */
+  input, textarea, select {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem; /* Space between form elements */
+    border-radius: 6px; /* Rounded borders */
+    border: 1px solid #ccc; /* Light border color */
+    font-size: 1rem; /* Text size */
+    font-family: 'Roboto', sans-serif; /* Roboto font */
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    border-color: #2980b9; /* Highlight on focus */
+    outline: none; /* Remove default focus outline */
+  }
+  
+  textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px; /* Set a minimum height */
+  }
+  
+  /* Button Styles */
+  button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    background-color: #0d42ff; /* Blue background */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+  }
+  
+  button:hover {
+    background-color: #000000; /* Darker blue on hover */
+  }
+  
+  button:active {
+    transform: scale(0.98); /* Slight shrink on click */
+  }
+  
+  /* Login Button (for the Go to Login action) */
+  .task-form button {
+    background-color: #0d42ff; /* Lighter blue for the login button */
+  }
+  
+  .task-form button:hover {
+    background-color: #0d42ff; /* Darker blue for hover effect */
+    background-color: #0e1d34; /* Darker blue on hover */
+  }
+  
+  /* For the case when user is not logged in */
+  .task-form div {
+    text-align: center; /* Center-align login message and button */
+    margin-top: 2rem;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .task-form {
+      width: 90%; /* Full width on smaller screens */
+      padding: 1rem; /* Reduce padding on smaller screens */
+    }
+  }
