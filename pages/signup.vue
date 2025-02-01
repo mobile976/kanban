@@ -1,78 +1,66 @@
 <template>
-  <div id="app">
-    <!-- Header Section -->
-    <header class="header">
-  <nav class="nav">
-    <div class="logo">
-      <router-link to="/">Khanban Application</router-link>
-    </div>
-    <ul class="nav-center">
-      <li><router-link to="/add-task">Add Task</router-link></li>
-      <li><router-link to="/kanban-board">Dashboard</router-link></li>
-      <li><router-link to="/remind-board">Reminders Tasks</router-link></li>
-    </ul>
-    <ul class="nav-right">
-      <li v-if="!user"><router-link to="/login">Login</router-link></li>
-      <li v-if="user">Welcome, {{ user.name }}</li>
-      <li v-if="user"><button @click="logout">Logout</button></li>
-    </ul>
-  </nav>
-</header>
+  <div>
+    <div>
+      <div class="dashboard">
+        <!-- Left Section -->
+        <div class="left-section">
+          <button @click="$router.push('/add-task')">Add Task</button>
+          <button @click="$router.push('/')">Dashboard</button>
+          <button @click="$router.push('/remind-board')">Remind Board</button>
+          <br />
+          <button @click="$router.push('/login')">Login</button>
+        </div>
 
-    <!-- Main Content Section -->
-    <main>
-      <div class="task-form">
-        <h1>Sign Up</h1>
-        <form @submit.prevent="signUp">
-          <div>
-            <label for="name">Name:</label>
-            <input
-              id="name"
-              v-model="name"
-              type="text"
-              placeholder="Enter your name"
-              aria-label="Name"
-              required
-            />
+        <!-- Right Section -->
+        <div class="right-section">
+          <div class="task-form">
+            <h1>Sign Up</h1>
+            <form @submit.prevent="signUp">
+              <div>
+                <label for="name">Name:</label>
+                <input
+                  id="name"
+                  v-model="name"
+                  type="text"
+                  placeholder="Enter your name"
+                  aria-label="Name"
+                  required
+                />
+              </div>
+              <div>
+                <label for="email">Email:</label>
+                <input
+                  id="email"
+                  v-model="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  aria-label="Email"
+                  required
+                />
+              </div>
+              <div>
+                <label for="password">Password:</label>
+                <input
+                  id="password"
+                  v-model="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  aria-label="Password"
+                  required
+                />
+              </div>
+              <button type="submit" :disabled="loading">
+                {{ loading ? "Signing Up..." : "Sign Up" }}
+              </button>
+              <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
+              <p v-if="successMessage" style="color: green;">{{ successMessage }}</p>
+            </form>
           </div>
-          <div>
-            <label for="email">Email:</label>
-            <input
-              id="email"
-              v-model="email"
-              type="email"
-              placeholder="Enter your email"
-              aria-label="Email"
-              required
-            />
-          </div>
-          <div>
-            <label for="password">Password:</label>
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              placeholder="Enter your password"
-              aria-label="Password"
-              required
-            />
-          </div>
-          <button type="submit" :disabled="loading">
-            {{ loading ? "Signing Up..." : "Sign Up" }}
-          </button>
-          <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
-          <p v-if="successMessage" style="color: green;">{{ successMessage }}</p>
-        </form>
+        </div>
       </div>
-    </main>
-
-    <!-- Footer Section -->
-    <footer class="footer">
-      <p>Web-based Task Management Application Development</p>
-    </footer>
+    </div>
   </div>
 </template>
-
 <script>
 import { auth } from "~/plugins/firebase";
 
@@ -156,8 +144,7 @@ export default {
   },
 };
 </script>
-<style scoped src="@/assets/css/header.css"></style>
-<style scoped src="@/assets/css/footer.css"></style>
 <style scoped src="@/assets/css/main.css"></style>
 <style scoped src="@/assets/css/general.css"></style>
+<style scoped src="@/assets/css/boarder.css"></style>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"></link>

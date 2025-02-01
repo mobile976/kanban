@@ -21,10 +21,9 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/assets/css/header.css',  // Path to your head CSS file
-    '@/assets/css/footer.css', // Path to your footer CSS file
     '@/assets/css/main.css', // Path to your main CSS file
     '@/assets/css/general.css', // Path to your general CSS file
+    '@/assets/css/boarder.css', // Path to your board CSS file
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

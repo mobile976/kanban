@@ -1,64 +1,69 @@
 <template>
   <div>
-    <!-- Header Section -->
-    <header class="header">
-      <nav class="nav">
-        <div class="logo">
-          <router-link to="/">Khanban Application</router-link>
-        </div>
-        <ul class="nav-center">
-          <li><router-link to="/add-task">Add Task</router-link></li>
-          <li><router-link to="/kanban-board">Dashboard</router-link></li>
-          <li><router-link to="/remind-board">Reminders Tasks</router-link></li>
-        </ul>
-        <ul class="nav-right">
-          <li v-if="!user"><router-link to="/signup">Sign Up</router-link></li>
-          <li v-if="user">Welcome, {{ user.name }}</li>
-          <li v-if="user"><button @click="logout">Logout</button></li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- Main Content Section -->
     <div v-if="!user">
-      <p>Please log in to edit tasks.</p>
+      <p>Please log in to Kanban board.</p>
       <button @click="$router.push('/login')">Go to Login</button>
     </div>
+    <div v-else>
+      <div class="dashboard">
+        <!-- Left Section -->
+        <div class="left-section">
+          <br />
+          <p><b>Welcome, {{ user.name }}</b></p>
+          <br />
+          <button @click="$router.push('/add-task')">Add Task</button>
+          <button @click="$router.push('/')">Dashboard</button>
+          <button @click="$router.push('/remind-board')">Remind Board</button>
+          <br />
+          <button @click="logout" class="logout">Logout</button>
+        </div>
 
-    <div v-else class="task-form">
-      <h1>Edit Task</h1>
-      <form @submit.prevent="updateTask">
-        <div>
-          <label for="title">Title:</label>
-          <input v-model="task.title" id="title" type="text" required />
+        <!-- Right Section -->
+        <div class="right-section">
+          <div class="task-form">
+            <div v-if="!user">
+              <p>Please log in to add tasks.</p>
+              <button @click="$router.push('/login')">Go to Login</button>
+            </div>
+
+            <div v-else>
+              <h1>Edit Task</h1>
+              <form @submit.prevent="updateTask">
+                <div>
+                  <label for="title">Title:</label>
+                  <input v-model="task.title" id="title" type="text" required />
+                </div>
+                <div>
+                  <label for="description">Description:</label>
+                  <textarea v-model="task.description" id="description" required></textarea>
+                </div>
+                <div>
+                  <label for="status">Status:</label>
+                  <select v-model="task.status" id="status" required>
+                    <option value="todo">Todo</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="done">Done</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="userInsertDate">Finished Date:</label>
+                  <input v-model="formattedUserInsertDate" id="userInsertDate" type="date" required />
+                </div>
+                <div>
+                  <label for="priority">Priority:</label>
+                  <select v-model="task.priority" id="priority" required>
+                    <option value="1">High</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Low</option>
+                  </select>
+                </div>
+                <button type="submit">Update Task</button>
+                <button type="button" @click="$router.push('/')">Cancel</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div>
-          <label for="description">Description:</label>
-          <textarea v-model="task.description" id="description" required></textarea>
-        </div>
-        <div>
-          <label for="status">Status:</label>
-          <select v-model="task.status" id="status" required>
-            <option value="todo">Todo</option>
-            <option value="in-progress">In Progress</option>
-            <option value="done">Done</option>
-          </select>
-        </div>
-        <div>
-          <label for="userInsertDate">Finished Date:</label>
-          <input v-model="formattedUserInsertDate" id="userInsertDate" type="date" required />
-        </div>
-        <div>
-          <label for="priority">Priority:</label>
-          <select v-model="task.priority" id="priority" required>
-            <option value="1">High</option>
-            <option value="2">Medium</option>
-            <option value="3">Low</option>
-          </select>
-        </div>
-        <button type="submit">Update Task</button>
-        <button type="button" @click="$router.push('/kanban-board')">Cancel</button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -143,7 +148,7 @@ export default {
           userInsertDate: this.task.userInsertDate,
           priority: Number(this.task.priority), // Ensure priority is a number
         });
-        this.$router.push("/kanban-board");
+        this.$router.push("/");
         console.log("Task updated successfully");
       } catch (error) {
         console.error("Error updating task: ", error);
@@ -156,9 +161,7 @@ export default {
   },
 };
 </script>
-
-<style scoped src="@/assets/css/header.css"></style>
-<style scoped src="@/assets/css/footer.css"></style>
 <style scoped src="@/assets/css/main.css"></style>
 <style scoped src="@/assets/css/general.css"></style>
+<style scoped src="@/assets/css/boarder.css"></style>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"></link>

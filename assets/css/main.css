@@ -1,7 +1,7 @@
 /* Main Task Form */
 .task-form {
     padding: 2rem;
-    width: 50%; /* Adjust width */
+    width: 90%; /* Adjust width */
     margin: 5rem auto; /* Center form horizontally and vertically */
     background-color: #fff; /* White background for the form */
     border-radius: 8px; /* Rounded corners */
@@ -77,7 +77,7 @@
   /* Mobile Responsiveness */
   @media (max-width: 768px) {
     .task-form {
-      width: 90%; /* Full width on smaller screens */
+      width: 100%; /* Full width on smaller screens */
       padding: 1rem; /* Reduce padding on smaller screens */
     }
   }
