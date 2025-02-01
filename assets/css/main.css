@@ -28,7 +28,7 @@
   }
   
   input:focus, textarea:focus, select:focus {
-    border-color: #2980b9; /* Highlight on focus */
+    border-color: #b54505; /* Highlight on focus */
     outline: none; /* Remove default focus outline */
   }
   
@@ -41,7 +41,7 @@
   button {
     padding: 0.8rem 1.5rem;
     border-radius: 6px;
-    background-color: #0d42ff; /* Blue background */
+    background-color: #eaa900; /* Blue background */
     color: white;
     border: none;
     cursor: pointer;
@@ -51,7 +51,7 @@
   }
   
   button:hover {
-    background-color: #000000; /* Darker blue on hover */
+    background-color: #b54505; /* Darker blue on hover */
   }
   
   button:active {
@@ -60,11 +60,11 @@
   
   /* Login Button (for the Go to Login action) */
   .task-form button {
-    background-color: #0d42ff; /* Lighter blue for the login button */
+    background-color: #b54505; /* Lighter blue for the login button */
   }
   
   .task-form button:hover {
-    background-color: #0d42ff; /* Darker blue for hover effect */
+    background-color: #b54505; /* Darker blue for hover effect */
     background-color: #0e1d34; /* Darker blue on hover */
   }
   

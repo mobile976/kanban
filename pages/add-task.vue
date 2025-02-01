@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!user">
+    <div v-if="!user" class="center-container">
       <p>Please log in to Kanban board.</p>
       <button @click="$router.push('/login')">Go to Login</button>
     </div>
@@ -35,7 +35,9 @@
                 <option value="in-progress">In Progress</option>
                 <option value="done">Done</option>
               </select>
-              <input v-model.number="newTask.priority" type="number" placeholder="Priority (1-5)" min="1" max="5" />
+              <label for="priority">Priority (1-3). 1 - High, 2 - Medium, 3 - Low:</label>
+              <input v-model.number="newTask.priority" type="number" placeholder="Priority (1-5)" min="1" max="3" />
+              <label for="userInsertDate">Finished Date:</label>
               <input v-model="newTask.userInsertDate" type="date" />
               <button @click="addTask">Add Task</button>
             </div>

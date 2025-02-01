@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!user">
+    <div v-if="!user" class="center-container">
       <p>Please log in to Kanban board.</p>
       <button @click="$router.push('/login')">Go to Login</button>
     </div>
@@ -36,7 +36,8 @@
                 <p>{{ task.description }}</p><br>
                 <p><strong>Finished on</strong> {{ formatDate(task.userInsertDate) }}</p>
                 <p><strong>Assigned to:</strong> {{ task.userName || 'Unknown' }}</p>
-                <p><strong>Priority:</strong> {{ getPriorityLabel(task.priority) }}</p><br>
+                <p><strong>Priority:</strong> {{ getPriorityLabel(task.priority) }}</p>
+                <p><strong>Shared With:</strong> {{ task.sharedWithNames && Array.isArray(task.sharedWithNames) ? task.sharedWithNames.join(", ") : 'N/A' }}</p><br>
                 <button @click="editTask(task.id)">Edit</button>
                 <button @click="deleteTask(task.id)">Delete</button>
                 <button @click="shareTask(task.id)">Share Task</button>

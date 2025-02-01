@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div v-if="!user">
-      <p>Please log in to Kanban board.</p>
+    <div v-if="!user" class="center-container">
+      <p>Please login in to Kanban board.</p><br>
       <button @click="$router.push('/login')">Go to Login</button>
     </div>
+
     <div v-else>
       <div class="dashboard">
         <!-- Left Section -->
@@ -20,37 +21,43 @@
 
         <!-- Right Section -->
         <div class="right-section">
-          <div class="content-container">
-            <h1>Remind Board</h1>
+          <div class="content-container"><br>
+            <h1>Remind Board</h1><br>
 
-            <div v-if="!user" class="auth-message">
-              <p>Please log in to view reminders.</p>
-              <button @click="$router.push('/login')" class="btn">Go to Login</button>
-            </div>
-
-            <div v-else>
-              <div v-if="filteredTasks.length === 0" class="no-tasks">
-                <p>No current reminders found.</p>
+            <div v-if="filteredTasks.length" class="reminder-cards-container">
+              <div
+                v-for="task in filteredTasks"
+                :key="task.id"
+                class="reminder-card"
+              >
+                <h3>{{ task.title }}</h3>
+                <br />
+                <p>{{ task.description }}</p>
+                <br />
+                <p><strong>Finished on:</strong> {{ formatDate(task.userInsertDate) }}</p>
+                <p><strong>Assigned to:</strong> {{ task.userName }}</p>
+                <p><strong>Priority:</strong> {{ getPriorityLabel(task.priority) }}</p>
+                <p>
+                  <strong>Shared With:</strong>
+                  {{
+                    task.sharedWithNames && Array.isArray(task.sharedWithNames)
+                      ? task.sharedWithNames.join(", ")
+                      : "N/A"
+                  }}
+                </p>
+                <br />
+                <button @click="editTask(task.id)">Edit</button>
+                <button @click="deleteTask(task.id)">Delete</button>
               </div>
-
-              <div v-else class="reminder-cards-container">
-                <div v-for="task in filteredTasks" :key="task.id" class="reminder-card">
-                  <h3>{{ task.title }}</h3>
-                  <br />
-                  <p>{{ task.description }}</p>
-                  <br />
-                  <p><strong>Finished on:</strong> {{ formatDate(task.userInsertDate) }}</p>
-                  <p><strong>Assigned to:</strong> {{ task.userName }}</p>
-                  <p><strong>Priority:</strong> {{ getPriorityLabel(task.priority) }}</p>
-                  <p><strong>Shared With:</strong> {{ task.sharedWithNames && Array.isArray(task.sharedWithNames) ? task.sharedWithNames.join(", ") : 'N/A' }}</p>
-                </div>
-              </div>
             </div>
 
-            <!-- Toast Notification -->
-            <div v-if="showToast" class="toast">
-              <p>{{ toastMessage }}</p>
-            </div>
+            <!-- No Reminders Message -->
+            <p v-else>No reminders available.</p>
+          </div>
+
+          <!-- Toast Notification -->
+          <div v-if="showToast" class="toast">
+            <p>{{ toastMessage }}</p>
           </div>
         </div>
       </div>
@@ -125,6 +132,28 @@ methods: {
     }
   },
 
+  async editTask(taskId) {
+      const taskRef = firestore.collection("tasks").doc(taskId);
+      const taskSnapshot = await taskRef.get();
+      if (taskSnapshot.exists) {
+        const task = taskSnapshot.data();
+        this.$router.push({ name: "edit-task", params: { taskId, task } });
+      } else {
+        console.log("Task not found");
+      }
+    },
+
+    async deleteTask(taskId) {
+      try {
+        await firestore.collection("tasks").doc(taskId).delete();
+        this.tasks = this.tasks.filter((task) => task.id !== taskId);
+        this.organizeTasksByStatus();
+        console.log("Task deleted successfully");
+      } catch (error) {
+        console.error("Error deleting task:", error);
+      }
+    },
+
   formatDate(date) {
     if (!date) return "";
     const jsDate = date.toDate ? date.toDate() : new Date(date);
@@ -163,15 +192,16 @@ methods: {
 <style scoped src="@/assets/css/general.css"></style>
 <style scoped src="@/assets/css/boarder.css"></style>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"></link>
+
 <style scoped>
 /* General Styles for Content Container */
 .content-container {
-padding: 2rem;
+padding: 10px;
 width: 90%;
-background-color: #f4f6f9;
-border-radius: 8px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-max-width: 900px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 2px 8px rgba(9, 91, 75, 0.4);
+max-width: 100%;
 margin: 2rem auto;
 }
 
@@ -193,26 +223,10 @@ font-size: 1.1rem;
 color: #555;
 }
 
-.btn {
-padding: 0.8rem 1.5rem;
-border-radius: 6px;
-background-color: #2980b9;
-color: white;
-border: none;
-font-size: 1rem;
-cursor: pointer;
-transition: background-color 0.3s ease;
-margin-top: 1rem;
-}
-
-.btn:hover {
-background-color: #1f6d7b;
-}
-
 .no-tasks {
 text-align: center;
-font-size: 1.2rem;
-color: #888;
+font-size: 1.1rem;
+color: #000000;
 margin-top: 2rem;
 }
 
@@ -225,55 +239,29 @@ justify-content: space-between;
 }
 
 .reminder-card {
-background-color: white;
+background-color: rgb(245, 245, 245);
+border: 1px solid #d3d3d3;
 padding: 1.5rem;
 flex: 0 0 48%; /* Takes up 48% of the available space (2 cards per row) */
 border-radius: 8px;
-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+box-shadow: 0 2px 6px rgba(41, 34, 34, 0.1);
 }
 
 .reminder-card h3 {
-font-size: 1.5rem;
+font-size: 1.1rem;
 font-weight: bold;
 margin-bottom: 0.5rem;
-color: #333;
+color: #e77737;
 }
 
 .reminder-card p {
-font-size: 1rem;
+font-size: 0.9rem;
 color: #555;
 margin: 0.5rem 0;
+line-height: 1.5;
 }
 
 .reminder-card strong {
 color: #000000;
 }
-
-/* Toast Notification */
-.toast {
-position: fixed;
-bottom: 20px;
-left: 50%;
-transform: translateX(-50%);
-background-color: #333;
-color: white;
-padding: 1rem 2rem;
-border-radius: 6px;
-font-size: 1.1rem;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-opacity: 0;
-animation: toast-animation 3s forwards;
-}
-
-@keyframes toast-animation {
-0% {
-  opacity: 0;
-  bottom: 0;
-}
-100% {
-  opacity: 1;
-  bottom: 20px;
-}
-}
-
 </style>
