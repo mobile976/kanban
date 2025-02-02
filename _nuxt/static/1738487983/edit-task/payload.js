@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/edit-task", {data:[{}],fetch:{},mutations:void 0});

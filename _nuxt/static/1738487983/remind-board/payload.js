@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/remind-board", {data:[{}],fetch:{},mutations:void 0});
