@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!user" class="center-container">
-      <p>Please log in to Kanban board.</p>
+      <p>Please log in to Kanban board...</p>
       <button @click="$router.push('/login')">Go to Login</button>
     </div>
     <div v-else>

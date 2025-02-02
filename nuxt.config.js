@@ -1,8 +1,14 @@
 export default {
-  // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
+  router: {
+    base: '/kanban/'  // ✅ Corrected base path for GitHub Pages
+  },
+
+  render: {
+    resourceHints: false  // ✅ Disables unnecessary preloading warnings
+  },
+
   head: {
     title: 'kanban',
     htmlAttrs: {
@@ -19,28 +25,19 @@ export default {
     ]
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/assets/css/main.css', // Path to your main CSS file
-    '@/assets/css/general.css', // Path to your general CSS file
-    '@/assets/css/boarder.css', // Path to your board CSS file
+    '@/assets/css/main.css',
+    '@/assets/css/general.css',
+    '@/assets/css/boarder.css',
   ],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/firebase.js'],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-  ],
+  buildModules: [],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-  ],
+  modules: [],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {}
 }
